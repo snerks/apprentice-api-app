@@ -19,29 +19,45 @@
     <!-- <div class="user"></div> -->
     <pre class="output"></pre>
 
-    <!-- <form method="POST" class="send-details">
+    <form method="POST" class="send-details">
       <label for="name">Name</label>
       <input id="name" name="name" type="text" />
 
       <label for="status">Status</label>
       <input id="status" name="status" type="text" />
 
-      <label for="github">GitHub Username</label>
-      <input id="github" name="github" type="text" />
+      <!-- <label for="github">GitHub Username</label>
+      <input id="github" name="github" type="text" /> -->
 
-    </form> -->
-
-    <button class="load-data">Load Data</button>
+      <button class="load-data">Load Data</button>
+    </form>
 
     <script>
       document
-        .querySelector(".load-data")
-        .addEventListener("click", async (event) => {
+        .querySelector(".send-details")
+        .addEventListener("submit", async (event) => {
           event.preventDefault();
+
+          const formData = new FormData(event.target);
+          const name = formData.get("name");
+          const status = formData.get("status");
 
           document.querySelector(".output").textContent = "Before Fetch...";
 
-          const res = await fetch("/.netlify/functions/hello");
+          // const res = await fetch("/.netlify/functions/hello");
+          // if (!res.ok) {
+          //   console.error(res);
+          //   return;
+          // }
+
+          const res = await fetch("/.netlify/functions/hello", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, status }),
+          });
+
           if (!res.ok) {
             console.error(res);
             return;
