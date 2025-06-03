@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Serverless From Scratch</title>
+
+    <!-- <style>
+      .user img {
+        max-width: 50px;
+        border-radius: 50%;
+      }
+    </style> -->
+  </head>
+  <body>
+    <h1>Serverless From Scratch</h1>
+
+    <!-- <div class="user"></div> -->
+    <pre class="output"></pre>
+
+    <!-- <form method="POST" class="send-details">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" />
+
+      <label for="status">Status</label>
+      <input id="status" name="status" type="text" />
+
+      <label for="github">GitHub Username</label>
+      <input id="github" name="github" type="text" />
+
+    </form> -->
+
+    <button class="load-data">Load Data</button>
+
+    <script>
+      document
+        .querySelector(".load-data")
+        .addEventListener("click", async (event) => {
+          event.preventDefault();
+
+          const res = await fetch("/.netlify/functions/hello");
+          if (!res.ok) {
+            console.error(res);
+            return;
+          }
+
+          const data = await res.text();
+          console.log({ data });
+
+          // const message = `Hello ${data.name}, you are ${data.status}!`;
+
+          document.querySelector(".output").textContent = data;
+
+          // const userElement = document.querySelector(".user");
+
+          // const img = document.createElement("img");
+          // img.src = data.avatar;
+          // img.alt = `GitHub avatar for ${data.github}`;
+
+          // const loc = document.createElement("p");
+          // loc.innerText = data.location;
+
+          // userElement.appendChild(img);
+          // userElement.appendChild(loc);
+        });
+    </script>
+
+    <!-- <script>
+      const form = document.querySelector('.send-details');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const name = formData.get('name');
+        const status = formData.get('status');
+        const github = formData.get('github');
+
+        const res = await fetch('/api/hello', {
+          method: 'POST',
+          body: JSON.stringify({ name, status, github }),
+        });
+
+        if (!res.ok) {
+          console.error(res);
+          return;
+        }
+
+        const data = await res.json();
+        console.log({ data });
+
+        const message = `Hello ${data.name}, you are ${data.status}!`;
+
+        document.querySelector('.output').textContent = message;
+
+        const userElement = document.querySelector('.user');
+
+        const img = document.createElement('img');
+        img.src = data.avatar;
+        img.alt = `GitHub avatar for ${data.github}`;
+
+        const loc = document.createElement('p');
+        loc.innerText = data.location;
+
+        userElement.appendChild(img);
+        userElement.appendChild(loc);
+      });
+    </script> -->
+  </body>
+</html>
