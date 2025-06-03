@@ -1,9 +1,12 @@
 export const handler = async () => {
+  const user = {
+    name: "John Doe",
+    status: "awesome",
+    time: new Date().toISOString(),
+  };
+
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      message: "Hello, API world!",
-      time: new Date().toISOString(),
-    }),
+    body: JSON.stringify(user),
   };
 };

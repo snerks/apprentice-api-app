@@ -39,18 +39,26 @@
         .addEventListener("click", async (event) => {
           event.preventDefault();
 
+          document.querySelector(".output").textContent = "Before Fetch...";
+
           const res = await fetch("/.netlify/functions/hello");
           if (!res.ok) {
             console.error(res);
             return;
           }
 
-          const data = await res.text();
+          const data = await res.json();
+          // alert("Data loaded successfully!");
           console.log({ data });
 
-          // const message = `Hello ${data.name}, you are ${data.status}!`;
+          console.log(`data = [${data}]`);
+          console.log(`data.name = [${data.name}]`);
+          console.log(`data.status = [${data.status}]`);
 
-          document.querySelector(".output").textContent = data;
+          const message = `Hello ${data.name}, you are ${data.status}!`;
+          console.log(`message = [${message}]`);
+
+          document.querySelector(".output").textContent = message;
 
           // const userElement = document.querySelector(".user");
 
