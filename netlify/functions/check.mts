@@ -1,7 +1,7 @@
 // Example Netlify Function with CORS support in TypeScript
 import { Handler, HandlerEvent, HandlerContext } from "@netlify/functions";
 
-const allowedOrigin = "*"; // "https://your-react-app-domain.com"; // Replace with your React app's domain
+const allowedOrigin = "https://your-react-app-domain.com"; // "https://your-react-app-domain.com"; // Replace with your React app's domain
 
 export const handler: Handler = async (
   event: HandlerEvent,

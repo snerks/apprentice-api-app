@@ -88,6 +88,26 @@
 
           userElement.appendChild(img);
           userElement.appendChild(loc);
+
+          // Vacancy
+          // http://localhost:8888/.netlify/functions/vacancy?vacancyReference=1000068586
+          const vacancyResponse = await fetch(
+            "/.netlify/functions/vacancy?vacancyReference=1000068586"
+          );
+
+          if (!vacancyResponse.ok) {
+            console.error(vacancyResponse);
+            return;
+          }
+
+          const vacancyResponseData = await vacancyResponse.json();
+          // alert("Data loaded successfully!");
+          console.log({ vacancyResponseData });
+
+          const vacancyResponseDataPara = document.createElement("p");
+          vacancyResponseDataPara.innerText = vacancyResponseData.employerName;
+
+          userElement.appendChild(vacancyResponseDataPara);
         });
     </script>
 
