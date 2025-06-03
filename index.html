@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Serverless From Scratch</title>
 
-    <!-- <style>
+    <style>
       .user img {
         max-width: 50px;
         border-radius: 50%;
       }
-    </style> -->
+    </style>
   </head>
   <body>
     <h1>Serverless From Scratch</h1>
 
-    <!-- <div class="user"></div> -->
+    <div class="user"></div>
     <pre class="output"></pre>
 
     <form method="POST" class="send-details">
@@ -26,8 +26,8 @@
       <label for="status">Status</label>
       <input id="status" name="status" type="text" />
 
-      <!-- <label for="github">GitHub Username</label>
-      <input id="github" name="github" type="text" /> -->
+      <label for="github">GitHub Username</label>
+      <input id="github" name="github" type="text" value="jlengstorf" />
 
       <button class="load-data">Load Data</button>
     </form>
@@ -41,6 +41,7 @@
           const formData = new FormData(event.target);
           const name = formData.get("name");
           const status = formData.get("status");
+          const github = formData.get("github");
 
           document.querySelector(".output").textContent = "Before Fetch...";
 
@@ -55,7 +56,7 @@
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ name, status }),
+            body: JSON.stringify({ name, status, github }),
           });
 
           if (!res.ok) {
@@ -76,17 +77,17 @@
 
           document.querySelector(".output").textContent = message;
 
-          // const userElement = document.querySelector(".user");
+          const userElement = document.querySelector(".user");
 
-          // const img = document.createElement("img");
-          // img.src = data.avatar;
-          // img.alt = `GitHub avatar for ${data.github}`;
+          const img = document.createElement("img");
+          img.src = data.avatar;
+          img.alt = `GitHub avatar for ${data.github}`;
 
-          // const loc = document.createElement("p");
-          // loc.innerText = data.location;
+          const loc = document.createElement("p");
+          loc.innerText = data.location;
 
-          // userElement.appendChild(img);
-          // userElement.appendChild(loc);
+          userElement.appendChild(img);
+          userElement.appendChild(loc);
         });
     </script>
 
