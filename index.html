@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Serverless From Scratch</title>
+    <title>Vacancies</title>
 
     <style>
       .user img {
@@ -14,20 +14,20 @@
     </style>
   </head>
   <body>
-    <h1>Serverless From Scratch</h1>
+    <h1>Fetch Sample Vacancies</h1>
 
     <div class="user"></div>
     <pre class="output"></pre>
 
     <form method="POST" class="send-details">
-      <label for="name">Name</label>
+      <!-- <label for="name">Name</label>
       <input id="name" name="name" type="text" />
 
       <label for="status">Status</label>
       <input id="status" name="status" type="text" />
 
       <label for="github">GitHub Username</label>
-      <input id="github" name="github" type="text" value="jlengstorf" />
+      <input id="github" name="github" type="text" value="jlengstorf" /> -->
 
       <button class="load-data">Load Data</button>
     </form>
@@ -43,7 +43,7 @@
           const status = formData.get("status");
           const github = formData.get("github");
 
-          document.querySelector(".output").textContent = "Before Fetch...";
+          // document.querySelector(".output").textContent = "Before Fetch...";
 
           // const res = await fetch("/.netlify/functions/hello");
           // if (!res.ok) {
@@ -51,46 +51,81 @@
           //   return;
           // }
 
-          const res = await fetch("/.netlify/functions/hello", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name, status, github }),
-          });
+          // const res = await fetch("/.netlify/functions/hello", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify({ name, status, github }),
+          // });
 
-          if (!res.ok) {
-            console.error(res);
-            return;
-          }
+          // if (!res.ok) {
+          //   console.error(res);
+          //   return;
+          // }
 
-          const data = await res.json();
-          // alert("Data loaded successfully!");
-          console.log({ data });
+          // const data = await res.json();
+          // // alert("Data loaded successfully!");
+          // console.log({ data });
 
-          console.log(`data = [${data}]`);
-          console.log(`data.name = [${data.name}]`);
-          console.log(`data.status = [${data.status}]`);
+          // console.log(`data = [${data}]`);
+          // console.log(`data.name = [${data.name}]`);
+          // console.log(`data.status = [${data.status}]`);
 
-          const message = `Hello ${data.name}, you are ${data.status}!`;
-          console.log(`message = [${message}]`);
+          // const message = `Hello ${data.name}, you are ${data.status}!`;
+          // console.log(`message = [${message}]`);
 
-          document.querySelector(".output").textContent = message;
+          // document.querySelector(".output").textContent = message;
 
           const userElement = document.querySelector(".user");
 
-          const img = document.createElement("img");
-          img.src = data.avatar;
-          img.alt = `GitHub avatar for ${data.github}`;
+          // const img = document.createElement("img");
+          // img.src = data.avatar;
+          // img.alt = `GitHub avatar for ${data.github}`;
 
-          const loc = document.createElement("p");
-          loc.innerText = data.location;
+          // const loc = document.createElement("p");
+          // loc.innerText = data.location;
 
-          userElement.appendChild(img);
-          userElement.appendChild(loc);
+          // userElement.appendChild(img);
+          // userElement.appendChild(loc);
+
+          // Vacancies
+          // http://localhost:8888/.netlify/functions/vacancies
+          console.log("Fetching vacancies...START");
+          const vacanciesResponse = await fetch(
+            "/.netlify/functions/vacancies"
+          );
+
+          if (!vacanciesResponse.ok) {
+            console.error(vacanciesResponse);
+            return;
+          }
+
+          const vacanciesResponseData = await vacanciesResponse.json();
+          // alert("Data loaded successfully!");
+          console.log({ vacanciesResponseData });
+
+          const vacanciesResponseDataPara = document.createElement("p");
+          vacanciesResponseDataPara.innerText = vacanciesResponseData.vacancies
+            .length
+            ? `Vacancies: ${vacanciesResponseData.vacancies.length}`
+            : "No vacancies found";
+
+          userElement.appendChild(vacanciesResponseDataPara);
+
+          const vacanciesResponseDataUl = document.createElement("ul");
+          for (const vacancyItem of vacanciesResponseData.vacancies) {
+            const vacanciesResponseDataLi = document.createElement("li");
+            vacanciesResponseDataLi.innerText = `${vacancyItem.vacancyReference} - ${vacancyItem.title}`;
+            vacanciesResponseDataUl.appendChild(vacanciesResponseDataLi);
+          }
+          userElement.appendChild(vacanciesResponseDataUl);
+
+          console.log("Fetching vacancies...END");
 
           // Vacancy
           // http://localhost:8888/.netlify/functions/vacancy?vacancyReference=1000068586
+          console.log("Fetching vacancy by Ref...START");
           const vacancyResponse = await fetch(
             "/.netlify/functions/vacancy?vacancyReference=1000068586"
           );
@@ -105,9 +140,10 @@
           console.log({ vacancyResponseData });
 
           const vacancyResponseDataPara = document.createElement("p");
-          vacancyResponseDataPara.innerText = vacancyResponseData.employerName;
+          vacancyResponseDataPara.innerText = `Sample Employer Name = [${vacancyResponseData.employerName}]`;
 
           userElement.appendChild(vacancyResponseDataPara);
+          console.log("Fetching vacancy by Ref...END");
         });
     </script>
 
