@@ -5,7 +5,7 @@ import {
   HandlerResponse,
 } from "@netlify/functions";
 
-const allowedOrigin = "https://snerks.github.io"; // "https://your-react-app-domain.com"; // Replace with your React app's domain
+const allowedOrigin = "*"; // "https://snerks.github.io"; // "https://your-react-app-domain.com"; // Replace with your React app's domain
 
 export const handler: Handler = async (
   event: HandlerEvent,
